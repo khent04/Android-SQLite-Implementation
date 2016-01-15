@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by kestrella on 1/15/16.
  */
+
 public class DatabaseAdapter {
     public static SQLiteDatabase database;
     public static DatabaseHelper dbHelper;
@@ -25,10 +26,11 @@ public class DatabaseAdapter {
         database = dbHelper.getWritableDatabase();
     }
 
-    // Method used to close the connection
+    /* Method used to close the connection
     public void close() {
         dbHelper.close();
     }
+    */
 
     // Add account
     public void addAccount(Data data) {
@@ -39,52 +41,39 @@ public class DatabaseAdapter {
         database.insert(DatabaseHelper.TABLE_NAME, null, values);
     }
 
-    // Get the last id number, why? http://developer.android.com/reference/android/database/Cursor.html
+    // Get the last id number
     public int getLastId() {
         int last = 0;
-
         String query = "SELECT  * FROM " + DatabaseHelper.TABLE_NAME;
         Cursor cursor = database.rawQuery(query, null);
-
         if(cursor.getCount() != 0) {
             cursor.moveToLast();
             last = cursor.getInt(0);
         }
-
         cursor.close();
-
         return last;
     }
 
 
     // Get all accounts
     public List<Data> getAllData() {
-        List<Data> accountLists = new ArrayList<Data>();
-
+        List<Data> dataLists = new ArrayList<>();
         // Select all rows
         String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_NAME;
-
         // A Cursor represents the result of a query and basically points to one row of the query result
         Cursor cursor = database.rawQuery(selectQuery, null);
-
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Data account = new Data
-                        (cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
-
-                // Adding data to list
-                accountLists.add(account);
+                Data account = new Data(cursor.getInt(0), cursor.getString(1));
+                dataLists.add(account); // Adding data to list
             } while (cursor.moveToNext());
         }
-
-        // Close the cursor
-        cursor.close();
-
-        return accountLists;
+        cursor.close(); // Close the cursor
+        return dataLists;
     }
 
-    // Delete account
+    /* Delete account
     public void deleteAccount(int id) {
         // Parameters of the Delete method of SQLiteDatabase
         // 1 - Table Name
@@ -94,8 +83,9 @@ public class DatabaseAdapter {
                 DatabaseHelper.UID + "=?",
                 new String[]{Integer.toString(id)});
     }
+    */
 
-    // Update account
+    /* Update account
     public void updateAccount(Data data) {
         // Content Values are used to insert and update data
         ContentValues values = new ContentValues();
@@ -110,6 +100,6 @@ public class DatabaseAdapter {
                 DatabaseHelper.UID + " = ?",
                 new String[] { Integer.toString(data.getId()) });
     }
-
+    */
 
 }

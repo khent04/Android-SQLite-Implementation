@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.Time;
-
 public class Add extends AppCompatActivity {
 
     @Override
@@ -26,7 +24,7 @@ public class Add extends AppCompatActivity {
                     Toast.makeText(Add.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
                 }else{
                     int id = MainActivity.dbAdapter.getLastId() + 1;
-                    Data newData = new Data(id, eTxtName.getText().toString().trim(), 1);
+                    Data newData = new Data(id, eTxtName.getText().toString().trim());
                     // add data
                     MainActivity.dbAdapter.addAccount(newData);
                     // Add data to array adapter

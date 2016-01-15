@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     public static DatabaseAdapter dbAdapter;
     public static ArrayAdapter<Data> dataAdapter;
-    ArrayList<Integer> entryID = new ArrayList<Integer>();
-    ArrayList<String> entryNames = new ArrayList<String>();
+    ArrayList<Integer> entryID = new ArrayList<>();
+    ArrayList<String> entryNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         dbAdapter = new DatabaseAdapter(this);
         dbAdapter.open();
 
-        dataAdapter = new ArrayAdapter<Data>(this,
+        dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1,
                 dbAdapter.getAllData());
 
@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
             initializeEntries();
             addFriends();
 
-            List<HashMap<String, String>> listOfFriends = new ArrayList<HashMap<String, String>>();
+            List<HashMap<String, String>> listOfFriends = new ArrayList<>();
             listOfFriends.clear();
 
             for (int i = 0; i < entryNames.size(); i++) {
-                HashMap<String, String> hm = new HashMap<String, String>();
+                HashMap<String, String> hm = new HashMap<>();
                 hm.put("name", entryNames.get(i));
                 listOfFriends.add(hm);
             }
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public void initializeEntries() {
         Cursor entryQuery = db.rawQuery("SELECT * FROM tblAshley", null);
         if (entryQuery.getCount() != 0) {
-            while (entryQuery.moveToNext()) {// go to first row
+            while (entryQuery.moveToNext()) { // go to next row
                 entryID.add(entryQuery.getInt(0)); //column 0 w/c is the id
                 entryNames.add(entryQuery.getString(1));
             }
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.list_view, from, to);
         ListView lViewFriends = (ListView) findViewById(R.id.lViewFriends);
         lViewFriends.setAdapter(adapter);
-//        registerForContextMenu(mylist);
     }
 
 }
